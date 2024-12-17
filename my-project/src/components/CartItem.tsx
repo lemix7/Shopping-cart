@@ -7,6 +7,8 @@ type CartItemProps = {
     image : string , 
 }
 
+
+
 const CartItem = ({title , price , image }: CartItemProps) => {
   return (
     <div className="flex justify-between items-start  p-4 w-full">

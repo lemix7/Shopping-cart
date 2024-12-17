@@ -1,10 +1,11 @@
 import ProductCard from "./ProductCard";
-import { useContext, useState } from "react";
-import { ItemsContext } from "@/Context/ItemsContext";
+import {  useEffect, useState } from "react";
+import { UseFetch } from "@/customHook/UseFetch";
 
 type CartItem = {
   title : string ,
   price : number
+  image : string
 }
 
 type CardsProps = {
@@ -13,18 +14,26 @@ type CardsProps = {
 
 
 const Cards = ({onStateChange}: CardsProps) => {
-  const { data } = useContext(ItemsContext);
+
+  const { data } = UseFetch({
+      url: "https://fakestoreapi.com/products",
+    });
+
+
   const [cart , setCart] = useState<CartItem[]>([])
 
-  const handleClick = (title: string , price: number) => {
-    setCart([...cart , {title , price}])
+  const handleClick = (title: string , price: number , image: string) => {
+    setCart([...cart , {title , price, image}])
   }
 
   const updateParent = () => {
     onStateChange(cart)
   }
 
-  updateParent()
+  useEffect(() => {
+    updateParent()
+  }, [cart])
+
 
   return (
     <div className="flex flex-wrap justify-center gap-8 px-11 py-11">
@@ -36,7 +45,7 @@ const Cards = ({onStateChange}: CardsProps) => {
           description={product.description}
           category={product.category}
           image={product.image}
-          onClick={() => handleClick(product.title , product.price)}
+          onClick={() => handleClick(product.title , product.price , product.image)}
         />
         
       ))}
