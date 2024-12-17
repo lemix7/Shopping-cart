@@ -1,20 +1,35 @@
 import Cards from "./components/Cards";
 import ShoppingCart from "./components/ShoppingCart";
-import { UseFetch } from "@/customHook/UseFetch";
+import { UseFetch  } from "@/customHook/UseFetch";
 import { ItemsContext } from "@/Context/ItemsContext";
+import { CartContext } from "./Context/CartContext";
+import { useState } from "react";
+
+type CartItem = {
+  title : string ,
+  price : number
+}
 
 const App = () => {
   const { data } = UseFetch({
     url: "https://fakestoreapi.com/products",
   });
+  const [cart , setCart] = useState<CartItem[]>([])
+
+  const handleStateChange = (cartItems: CartItem[]) => {
+    setCart(cartItems)
+    console.log(cart);
+  }
   return (
+    <CartContext.Provider value={{ cart: [], setCart: () => {} }}>
     <ItemsContext.Provider value={{ data }}>
       <div className="py-11">
         <h1 className="text-6xl text-center">Shopping Cart </h1>
-        <Cards />
+        <Cards onStateChange={handleStateChange}/>
         <ShoppingCart />
       </div>
     </ItemsContext.Provider>
+    </CartContext.Provider>
   );
 };
 

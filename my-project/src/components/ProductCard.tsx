@@ -13,9 +13,10 @@ type ProductCardProps = {
     description : string ,
     category : string ,
     image : string , 
+    onClick : () => void
 }
 
-const ProductCard = ({ title , price  , category , image }: ProductCardProps) => {
+const ProductCard = ({ title , price  , category , image , onClick }: ProductCardProps) => {
   return (
     <Card className="max-w-[300px]   flex flex-col justify-between ">
 
@@ -27,7 +28,7 @@ const ProductCard = ({ title , price  , category , image }: ProductCardProps) =>
       </CardHeader>
 
       <CardContent className="flex justify-between items-center">
-      <Button className="py-6"> Add to cart </Button>
+      <Button className="py-6" onClick={onClick}> Add to cart </Button>
 
          ${price}
       </CardContent>
