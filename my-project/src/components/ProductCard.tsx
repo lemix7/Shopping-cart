@@ -8,32 +8,37 @@ import {
 import { Button } from "@/components/ui/button";
 
 type ProductCardProps = {
-    title : string ,
-    price : number ,
-    description : string ,
-    category : string ,
-    image : string , 
-    onClick : () => void
-}
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  onClick: () => void;
+};
 
-const ProductCard = ({ title , price  , category , image , onClick }: ProductCardProps) => {
+const ProductCard = ({
+  title,
+  price,
+  category,
+  image,
+  onClick,
+}: ProductCardProps) => {
   return (
     <Card className="max-w-[300px]   flex flex-col justify-between ">
-
       <CardHeader>
-      <img className="  mb-4 aspect-square " src={image} alt="Product img" />
+        <img className="  mb-4 aspect-square " src={image} alt="Product img" />
 
         <CardTitle>{title}</CardTitle>
         <CardDescription> {category}</CardDescription>
       </CardHeader>
 
       <CardContent className="flex justify-between items-center">
-      <Button className="py-6" onClick={onClick}> Add to cart </Button>
-
-         ${price}
+        <Button className="py-6" onClick={onClick}>
+          {" "}
+          Add to cart{" "}
+        </Button>
+        ${price}
       </CardContent>
-
-
     </Card>
   );
 };

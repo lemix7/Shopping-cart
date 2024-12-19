@@ -1,38 +1,23 @@
 import ProductCard from "./ProductCard";
-import {  useEffect, useState } from "react";
+import {  useContext } from "react";
 import { UseFetch } from "@/customHook/UseFetch";
-
-type CartItem = {
-  title : string ,
-  price : number
-  image : string
-}
-
-type CardsProps = {
-  onStateChange : (cart: CartItem[]) => void
-}
+import { CartContextV } from "@/Context/CartContextV";
 
 
-const Cards = ({onStateChange}: CardsProps) => {
-
+const Cards = () => {
+  
+  const {cart = [], setCart} = useContext(CartContextV)
+  
   const { data } = UseFetch({
       url: "https://fakestoreapi.com/products",
     });
 
 
-  const [cart , setCart] = useState<CartItem[]>([])
-
   const handleClick = (title: string , price: number , image: string) => {
-    setCart([...cart , {title , price, image}])
+    if (setCart) {
+      setCart([...cart , {title , price, image}]);
+    }
   }
-
-  const updateParent = () => {
-    onStateChange(cart)
-  }
-
-  useEffect(() => {
-    updateParent()
-  }, [cart])
 
 
   return (

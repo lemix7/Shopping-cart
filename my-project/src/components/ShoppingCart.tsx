@@ -1,28 +1,24 @@
 import CartItem from "./CartItem";
 import CartTotal from "./CartTotal";
-import { CartContext } from "@/Context/CartContext";
 import { useContext } from "react";
+import { CartContextV } from "@/Context/CartContextV";
 
-type product = {
-  title: string;
-  price: number;
-  image: string;
-}
-type cartType ={
 
-  cart: product[]
-  setCart: (cart: product[]) => void
-}
+
 
 const ShoppingCart = () => {
-  const { cart , setCart } = useContext<cartType>(CartContext);
 
-  // Check if data exists and has at least one item
+  const {cart = [], setCart} = useContext(CartContextV)
+
+
   let totalPrice = 0 
 
   const handleClearCart = () => { // this only clear the cart but it does not remove the product from the cart it need to remove the product from the cart array 
-    setCart([])   
+    if (setCart) {
+      setCart([]);
+    }
     totalPrice = 0  
+    console.log(cart,'cart cleared')
   }
 
   console.log(cart , 'cart')
@@ -46,6 +42,7 @@ const ShoppingCart = () => {
           />
         )
         )}
+        
       </div>
 
       {cart.map((product) => ( 
